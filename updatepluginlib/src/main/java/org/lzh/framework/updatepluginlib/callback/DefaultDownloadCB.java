@@ -16,26 +16,18 @@ import java.lang.ref.WeakReference;
 /**
  * @author Administrator
  */
-public class DefaultDownloadCB implements UpdateDownloadCB {
+public class DefaultDownloadCB extends UpdateDownloadCB {
 
-    private WeakReference<Activity> actRef = null;
-    private UpdateBuilder builder;
     private UpdateDownloadCB downloadCB;
-    private Update update;
     private UpdateDownloadCB innerCB;
 
-    public DefaultDownloadCB(Activity activity) {
-        actRef = new WeakReference<>(activity);
+    public DefaultDownloadCB() {
+        super();
+        downloadCB=this.builder.getDownloadCB();
     }
 
-    public void setBuilder(UpdateBuilder builder) {
-        this.builder = builder;
-        downloadCB = builder.getDownloadCB();
-    }
 
-    public void setUpdate(Update update) {
-        this.update = update;
-    }
+
 
     public void setDownloadCB(UpdateDownloadCB downloadCB) {
         this.downloadCB = downloadCB;
@@ -54,7 +46,7 @@ public class DefaultDownloadCB implements UpdateDownloadCB {
 
     public UpdateDownloadCB getInnerCB() {
         if (innerCB == null && builder.getStrategy().isShowDownloadDialog()) {
-            innerCB = builder.getDownloadDialogCreator().create(update,actRef.get());
+            innerCB = builder.getDownloadDialogCreator().create(update,actRef.get(),builder);
         }
         return innerCB;
     }

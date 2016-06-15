@@ -14,19 +14,13 @@ import java.lang.ref.WeakReference;
 /**
  * default callback that check if new version exist
  */
-public class DefaultCheckCB implements UpdateCheckCB {
+public class DefaultCheckCB extends UpdateCheckCB {
 
-    private WeakReference<Activity> actRef = null;
-    private UpdateBuilder builder;
     private UpdateCheckCB checkCB;
 
-    public DefaultCheckCB(Activity context) {
-        this.actRef = new WeakReference<>(context);
-    }
-
-    public void setBuilder (UpdateBuilder builder) {
-        this.builder = builder;
-        checkCB = builder.getCheckCB();
+    public DefaultCheckCB() {
+        super();
+        checkCB=this.builder.getCheckCB();
     }
 
     @Override

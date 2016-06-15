@@ -1,5 +1,6 @@
 package org.lzh.framework.updatepluginlib;
 
+import android.app.Activity;
 import android.content.Context;
 import android.text.TextUtils;
 
@@ -17,9 +18,12 @@ import org.lzh.framework.updatepluginlib.creator.DefaultNeedUpdateCreator;
 import org.lzh.framework.updatepluginlib.creator.DialogCreator;
 import org.lzh.framework.updatepluginlib.creator.DownloadCreator;
 import org.lzh.framework.updatepluginlib.creator.InstallCreator;
+import org.lzh.framework.updatepluginlib.model.Update;
 import org.lzh.framework.updatepluginlib.model.UpdateParser;
 import org.lzh.framework.updatepluginlib.strategy.UpdateStrategy;
 import org.lzh.framework.updatepluginlib.strategy.WifiFirstStrategy;
+
+import java.lang.ref.WeakReference;
 
 /**
  */
@@ -39,16 +43,29 @@ public class UpdateConfig {
     private ApkFileCreator fileCreator;
 
     private static UpdateConfig config;
+
+    private UpdateBuilder builder;
+    private WeakReference<Activity> actRef;
+
+    private Update update;
     public static UpdateConfig getConfig() {
         if (config == null) {
             config = new UpdateConfig();
         }
         return config;
     }
-
-    UpdateConfig context (Context context) {
+    UpdateConfig update(Update update){
+        this.update=update;
+        return this;
+    }
+    UpdateConfig builder(UpdateBuilder builder){
+        this.builder=builder;
+        return  this;
+    }
+    UpdateConfig context (Activity context) {
         if (this.context == null) {
             this.context = context.getApplicationContext();
+            this.actRef=new WeakReference<Activity>(context);
         }
         return this;
     }
@@ -184,5 +201,17 @@ public class UpdateConfig {
 
     public UpdateDownloadCB getDownloadCB() {
         return downloadCB;
+    }
+
+    public UpdateBuilder getBuilder() {
+        return builder;
+    }
+
+    public WeakReference<Activity> getActRef() {
+        return actRef;
+    }
+
+    public Update getUpdate() {
+        return update;
     }
 }

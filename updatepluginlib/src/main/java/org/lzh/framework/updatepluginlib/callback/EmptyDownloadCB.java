@@ -1,11 +1,20 @@
 package org.lzh.framework.updatepluginlib.callback;
 
+import android.app.Activity;
+
+import org.lzh.framework.updatepluginlib.UpdateBuilder;
+import org.lzh.framework.updatepluginlib.model.Update;
+
 import java.io.File;
 
 /**
  * @author Administrator
  */
-public class EmptyDownloadCB implements UpdateDownloadCB {
+public class EmptyDownloadCB extends UpdateDownloadCB {
+    public EmptyDownloadCB() {
+        super();
+    }
+
     @Override
     public void onUpdateStart() {
 

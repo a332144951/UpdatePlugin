@@ -1,31 +1,45 @@
 package org.lzh.framework.updatepluginlib.callback;
 
+import android.app.Activity;
+
+import org.lzh.framework.updatepluginlib.UpdateBuilder;
+import org.lzh.framework.updatepluginlib.UpdateConfig;
 import org.lzh.framework.updatepluginlib.model.Update;
+
+import java.lang.ref.WeakReference;
 
 /**
  * The update check callback
  */
-public interface UpdateCheckCB {
+public abstract class UpdateCheckCB {
+
+    protected WeakReference<Activity> actRef = null;
+    protected UpdateBuilder builder;
+
+    public UpdateCheckCB() {
+        this.actRef = UpdateConfig.getConfig().getActRef();
+        this.builder = UpdateConfig.getConfig().getBuilder();
+    }
 
     /**
      * There are a new version of APK on network
      */
-    void hasUpdate(Update update);
+    public abstract void hasUpdate(Update update);
 
     /**
      * There are no new version for update
      */
-    void noUpdate();
+    public abstract   void noUpdate();
 
     /**
      * http check error,
      * @param code http code
      * @param errorMsg http error msg
      */
-    void onCheckError(int code, String errorMsg);
+    public abstract   void onCheckError(int code, String errorMsg);
 
     /**
      * to be invoked by user press cancel button.
      */
-    void onUserCancel();
+  public abstract void onUserCancel();
 }

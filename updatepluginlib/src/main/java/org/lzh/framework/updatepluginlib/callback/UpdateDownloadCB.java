@@ -1,19 +1,35 @@
 package org.lzh.framework.updatepluginlib.callback;
 
+import android.app.Activity;
+
+import org.lzh.framework.updatepluginlib.UpdateBuilder;
+import org.lzh.framework.updatepluginlib.UpdateConfig;
+import org.lzh.framework.updatepluginlib.model.Update;
+
 import java.io.File;
+import java.lang.ref.WeakReference;
 
 /**
  * @author Administrator
  */
-public interface UpdateDownloadCB {
+public abstract class UpdateDownloadCB {
+    protected WeakReference<Activity> actRef = null;
+    protected UpdateBuilder builder;
+    protected Update update;
 
-    void onUpdateStart();
+    public UpdateDownloadCB() {
+        this.actRef = UpdateConfig.getConfig().getActRef();
+        this.builder = UpdateConfig.getConfig().getBuilder();
+        this.update=UpdateConfig.getConfig().getUpdate();
+    }
 
-    void onUpdateComplete(File file);
+    public abstract void onUpdateStart();
 
-    void onUpdateProgress(long current, long total);
+    public abstract void onUpdateComplete(File file);
 
-    void onUpdateError(int code, String errorMsg);
+    public abstract void onUpdateProgress(long current, long total);
+
+    public abstract   void onUpdateError(int code, String errorMsg);
 
 
 }

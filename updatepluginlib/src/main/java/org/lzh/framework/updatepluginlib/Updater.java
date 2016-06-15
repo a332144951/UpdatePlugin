@@ -36,9 +36,9 @@ public class Updater {
     public void checkUpdate(Activity activity,UpdateBuilder builder) {
 
         UpdateConfig.getConfig().context(activity);
+        UpdateConfig.getConfig().builder(builder);
         // define a default callback to receive callback from update task
-        DefaultCheckCB checkCB = new DefaultCheckCB(activity);
-        checkCB.setBuilder(builder);
+        DefaultCheckCB checkCB = new DefaultCheckCB();
 
         UpdateWorker checkWorker = builder.getCheckWorker();
         checkWorker.setUrl(builder.getUrl());
@@ -56,10 +56,10 @@ public class Updater {
      */
     public void downUpdate(Activity activity,Update update,UpdateBuilder builder) {
         UpdateConfig.getConfig().context(activity);
+        UpdateConfig.getConfig().builder(builder);
+        UpdateConfig.getConfig().update(update);
         // define a default download callback to receive callback from download task
-        DefaultDownloadCB downloadCB = new DefaultDownloadCB(activity);
-        downloadCB.setBuilder(builder);
-        downloadCB.setUpdate(update);
+        DefaultDownloadCB downloadCB = new DefaultDownloadCB();
         downloadCB.setDownloadCB(builder.getDownloadCB());
 
         DownloadWorker downloadWorker = builder.getDownloadWorker();
