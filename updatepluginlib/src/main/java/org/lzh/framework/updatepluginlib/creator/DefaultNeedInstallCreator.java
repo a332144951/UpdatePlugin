@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
+import android.view.View;
 
 import org.lzh.framework.updatepluginlib.R;
 import org.lzh.framework.updatepluginlib.model.Update;
@@ -15,7 +16,7 @@ import org.lzh.framework.updatepluginlib.util.SafeDialogOper;
  */
 public class DefaultNeedInstallCreator extends InstallCreator {
     @Override
-    public Dialog create(Update update, final String path, final Activity activity) {
+    public Dialog create(final Update update, final String path, final Activity activity) {
         String updateContent = activity.getText(R.string.update_version_name)
                 + ": " + update.getVersionName() + "\n\n\n"
                 + update.getUpdateContent();
@@ -38,7 +39,17 @@ public class DefaultNeedInstallCreator extends InstallCreator {
                 }
             });
         }
-        return builder.show();
+        final AlertDialog dialog=builder.create();
+        dialog.getButton(DialogInterface.BUTTON_NEUTRAL).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(!update.isForced()){
+                    SafeDialogOper.safeDismissDialog(dialog);
+                }
+                InstallUtil.installApk(activity,path);
+            }
+        });
+        return dialog;
     }
 
 }
