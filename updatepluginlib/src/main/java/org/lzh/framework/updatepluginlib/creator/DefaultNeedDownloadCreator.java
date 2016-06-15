@@ -25,7 +25,7 @@ public class DefaultNeedDownloadCreator extends DownloadCreator {
             dialog.setCanceledOnTouchOutside(false);
         }
         SafeDialogOper.safeShowDialog(dialog);
-        UpdateDownloadCB downloadCB = new UpdateDownloadCB(update) {
+        UpdateDownloadCB downloadCB = new UpdateDownloadCB() {
             @Override
             public void onUpdateStart() {
             }
