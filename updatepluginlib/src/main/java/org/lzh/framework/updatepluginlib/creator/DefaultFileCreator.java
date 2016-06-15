@@ -11,10 +11,10 @@ import java.io.File;
  */
 public class DefaultFileCreator implements ApkFileCreator {
     @Override
-    public File create(String versionName) {
+    public File create(String versionName,int versionCode) {
         File cacheDir = getCacheDir();
         cacheDir.mkdirs();
-        return new File(cacheDir,"update_v_" + versionName);
+        return new File(cacheDir,"update_v_" + versionName+"_"+versionCode+".apk");
     }
 
     File getCacheDir() {

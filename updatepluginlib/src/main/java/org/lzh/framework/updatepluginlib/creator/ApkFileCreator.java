@@ -7,5 +7,5 @@ import java.io.File;
  */
 public interface ApkFileCreator {
 
-    File create(String versionName);
+    File create(String versionName,int versionCode);
 }
