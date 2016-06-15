@@ -112,8 +112,8 @@ public class DefaultDownloadWorker extends DownloadWorker {
         urlConn.setRequestProperty("Content-Type","text/html; charset=UTF-8");
         urlConn.setRequestMethod("GET");
         urlConn.setConnectTimeout(10000);
-        urlConn.setDoOutput(true);  //这会把request method 强制变成post请求 造成下载失败
-     //   urlConn.setDoInput(true);
+        //urlConn.setDoOutput(true);  //这会把request method 强制变成post请求 造成下载失败
+        urlConn.setDoInput(true);
     }
 
     private long getLastDownloadSize(String url) {
