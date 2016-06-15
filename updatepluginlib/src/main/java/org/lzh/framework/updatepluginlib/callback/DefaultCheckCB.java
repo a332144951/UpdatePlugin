@@ -20,7 +20,7 @@ public class DefaultCheckCB extends UpdateCheckCB {
 
     public DefaultCheckCB() {
         super();
-        checkCB=this.builder.getCheckCB();
+        checkCB=getBuilder().getCheckCB();
     }
 
     @Override
@@ -29,15 +29,15 @@ public class DefaultCheckCB extends UpdateCheckCB {
             checkCB.hasUpdate(update);
         }
 
-        if (!builder.getStrategy().isShowUpdateDialog(update)) {
-            Updater.getInstance().downUpdate(actRef.get(),update,builder);
+        if (!getBuilder().getStrategy().isShowUpdateDialog(update)) {
+            Updater.getInstance().downUpdate(getActRef().get(),update,getBuilder());
             return;
         }
 
-        DialogCreator creator = builder.getUpdateDialogCreator();
-        creator.setBuilder(builder);
+        DialogCreator creator = getBuilder().getUpdateDialogCreator();
+        creator.setBuilder(getBuilder());
         creator.setCheckCB(this);
-        Dialog dialog = creator.create(update,actRef.get());
+        Dialog dialog = creator.create(update,getActRef().get());
 
         if (update.isForced()) {
             dialog.setCanceledOnTouchOutside(false);

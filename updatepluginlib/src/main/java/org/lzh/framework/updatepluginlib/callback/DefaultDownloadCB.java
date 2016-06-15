@@ -23,15 +23,21 @@ public class DefaultDownloadCB extends UpdateDownloadCB {
 
     public DefaultDownloadCB() {
         super();
-        downloadCB=this.builder.getDownloadCB();
+//        downloadCB=getBuilder().getDownloadCB();
     }
 
 
-
+    public UpdateDownloadCB getDownloadCB() {
+        if(downloadCB==null){
+            downloadCB=getBuilder().getDownloadCB();
+        }
+        return downloadCB;
+    }
 
     public void setDownloadCB(UpdateDownloadCB downloadCB) {
         this.downloadCB = downloadCB;
     }
+
 
     @Override
     public void onUpdateStart() {
@@ -45,8 +51,8 @@ public class DefaultDownloadCB extends UpdateDownloadCB {
     }
 
     public UpdateDownloadCB getInnerCB() {
-        if (innerCB == null && builder.getStrategy().isShowDownloadDialog()) {
-            innerCB = builder.getDownloadDialogCreator().create(update,actRef.get(),builder);
+        if (innerCB == null && getBuilder().getStrategy().isShowDownloadDialog()) {
+            innerCB = getBuilder().getDownloadDialogCreator().create(getUpdate(),getActRef().get(),getBuilder());
         }
         return innerCB;
     }
@@ -61,12 +67,12 @@ public class DefaultDownloadCB extends UpdateDownloadCB {
             innerCB.onUpdateComplete(file);
         }
 
-        if (builder.getStrategy().isShowInstallDialog()) {
-            InstallCreator creator = builder.getInstallDialogCreator();
-            creator.setCheckCB(builder.getCheckCB());
-            Dialog dialog = creator.create(update, file.getAbsolutePath(),actRef.get());
+        if (getBuilder().getStrategy().isShowInstallDialog()) {
+            InstallCreator creator = getBuilder().getInstallDialogCreator();
+            creator.setCheckCB(getBuilder().getCheckCB());
+            Dialog dialog = creator.create(getUpdate(), file.getAbsolutePath(),getActRef().get());
             SafeDialogOper.safeShowDialog(dialog);
-        }else if (builder.getStrategy().isAutoInstall()) {
+        }else if (getBuilder().getStrategy().isAutoInstall()) {
             InstallUtil.installApk(UpdateConfig.getConfig().getContext(),file.getAbsolutePath());
         }
     }

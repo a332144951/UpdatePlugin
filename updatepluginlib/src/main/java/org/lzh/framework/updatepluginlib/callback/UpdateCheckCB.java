@@ -13,12 +13,11 @@ import java.lang.ref.WeakReference;
  */
 public abstract class UpdateCheckCB {
 
-    protected WeakReference<Activity> actRef = null;
-    protected UpdateBuilder builder;
+    private WeakReference<Activity> actRef = null;
+    private UpdateBuilder builder;
 
     public UpdateCheckCB() {
-        this.actRef = UpdateConfig.getConfig().getActRef();
-        this.builder = UpdateConfig.getConfig().getBuilder();
+
     }
 
     /**
@@ -42,4 +41,18 @@ public abstract class UpdateCheckCB {
      * to be invoked by user press cancel button.
      */
   public abstract void onUserCancel();
+
+    public WeakReference<Activity> getActRef() {
+        if(actRef==null){
+            actRef=UpdateConfig.getConfig().getActRef();
+        }
+        return actRef;
+    }
+
+    public UpdateBuilder getBuilder() {
+        if(builder==null){
+            builder=UpdateConfig.getConfig().getBuilder();
+        }
+        return builder;
+    }
 }

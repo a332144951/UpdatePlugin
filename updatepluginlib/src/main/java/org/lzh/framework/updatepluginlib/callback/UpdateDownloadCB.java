@@ -13,14 +13,11 @@ import java.lang.ref.WeakReference;
  * @author Administrator
  */
 public abstract class UpdateDownloadCB {
-    protected WeakReference<Activity> actRef = null;
-    protected UpdateBuilder builder;
-    protected Update update;
+    private WeakReference<Activity> actRef = null;
+    private UpdateBuilder builder;
+    private Update update;
 
     public UpdateDownloadCB() {
-        this.actRef = UpdateConfig.getConfig().getActRef();
-        this.builder = UpdateConfig.getConfig().getBuilder();
-        this.update=UpdateConfig.getConfig().getUpdate();
     }
 
     public abstract void onUpdateStart();
@@ -32,4 +29,24 @@ public abstract class UpdateDownloadCB {
     public abstract   void onUpdateError(int code, String errorMsg);
 
 
+    public WeakReference<Activity> getActRef() {
+        if(actRef==null){
+            actRef=UpdateConfig.getConfig().getActRef();
+        }
+        return actRef;
+    }
+
+    public UpdateBuilder getBuilder() {
+        if(builder==null){
+            builder=UpdateConfig.getConfig().getBuilder();
+        }
+        return builder;
+    }
+
+    public Update getUpdate() {
+        if(update==null){
+            update=UpdateConfig.getConfig().getUpdate();
+        }
+        return update;
+    }
 }
